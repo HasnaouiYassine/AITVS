@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+@theme inline {
+  --color-navy-50: #e8eef5;
+  --color-navy-100: #c5d4e6;
+  --color-navy-300: #6b92bc;
+  --color-navy: #1f3a5f;
+  --color-navy-600: #183050;
+  --color-navy-dark: #152944;
+  --color-amber-50: #fdf3e1;
+  --color-amber-100: #fae0b0;
+  --color-amber-300: #f0b84a;
+  --color-amber: #e8a020;
+  --color-amber-600: #c4870f;
+  --color-surface: #f8f7f4;
+  --color-ink: #1c1b1b;
+  --color-muted: #5f6368;
+  --color-line: #e5e2e1;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #f8f7f4;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    linear-gradient(90deg, rgba(31, 58, 95, 0.035) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(31, 58, 95, 0.035) 1px, transparent 1px),
+    #f8f7f4;
+  background-size: 44px 44px;
+  color: #1c1b1b;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.card {
+  border: 1px solid rgba(229, 226, 225, 0.85);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: var(--shadow-card);
+}
+
+.input-field {
+  width: 100%;
+  border: 1px solid #d8d5d2;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 0.7rem 0.9rem;
+  color: #1c1b1b;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.input-field:focus {
+  border-color: #1f3a5f;
+  box-shadow: 0 0 0 3px rgba(31, 58, 95, 0.16);
+}
+
+.tile-texture {
+  background-image:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0)),
+    repeating-linear-gradient(45deg, rgba(31, 58, 95, 0.12) 0 1px, transparent 1px 12px);
+}

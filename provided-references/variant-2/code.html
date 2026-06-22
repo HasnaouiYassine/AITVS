@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TileVision - Projects Gallery</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed-dim": "#aec8f4",
+                      "outline": "#74777f",
+                      "inverse-surface": "#313030",
+                      "on-surface": "#1c1b1b",
+                      "surface-dim": "#dcd9d9",
+                      "surface-container-low": "#f6f3f2",
+                      "surface-container": "#f0eded",
+                      "secondary-fixed": "#ffddb2",
+                      "surface-variant": "#e5e2e1",
+                      "on-primary-fixed-variant": "#2d476d",
+                      "tertiary": "#232523",
+                      "tertiary-fixed-dim": "#c7c6c4",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed": "#e3e2df",
+                      "tertiary-container": "#393a38",
+                      "surface-container-highest": "#e5e2e1",
+                      "surface-bright": "#fcf9f8",
+                      "secondary": "#815500",
+                      "on-secondary-fixed": "#291800",
+                      "on-error": "#ffffff",
+                      "on-secondary-fixed-variant": "#624000",
+                      "primary": "#032448",
+                      "on-background": "#1c1b1b",
+                      "primary-fixed": "#d5e3ff",
+                      "on-secondary-container": "#6d4700",
+                      "inverse-primary": "#aec8f4",
+                      "on-surface-variant": "#43474e",
+                      "error-container": "#ffdad6",
+                      "surface": "#fcf9f8",
+                      "on-tertiary": "#ffffff",
+                      "secondary-fixed-dim": "#ffb94c",
+                      "on-tertiary-container": "#a4a4a1",
+                      "on-error-container": "#93000a",
+                      "on-primary-container": "#8ba4cf",
+                      "primary-fixed": "#d5e3ff",
+                      "on-tertiary-fixed": "#1a1c1a",
+                      "on-primary-fixed": "#001c3b",
+                      "background": "#fcf9f8",
+                      "surface-tint": "#465f86",
+                      "outline-variant": "#c4c6cf",
+                      "on-secondary": "#ffffff",
+                      "secondary-container": "#feb234",
+                      "inverse-on-surface": "#f3f0ef",
+                      "on-primary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "on-tertiary-fixed-variant": "#464745",
+                      "surface-container-high": "#eae7e7"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "8px",
+                      "gutter": "24px",
+                      "sm": "16px",
+                      "xl": "48px",
+                      "margin-mobile": "16px",
+                      "lg": "32px",
+                      "md": "24px",
+                      "base": "4px",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "caption": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "label-md": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "caption": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #F8F7F4; /* Brand base background */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .project-card:hover .project-actions {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen overflow-x-hidden">
+<!-- SideNavBar Shell (Desktop Only) -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full w-[240px] z-50 flex-col py-lg bg-primary dark:bg-tertiary-container shadow-md">
+<div class="px-md mb-xl flex flex-col gap-base">
+<h1 class="font-headline-md text-headline-md text-surface-container-lowest">TileVision</h1>
+<p class="font-label-md text-label-md text-surface-container-lowest opacity-60">AI Visualization</p>
+</div>
+<nav class="flex-grow">
+<!-- Active Tab: Dashboard -->
+<a class="flex items-center text-surface-container-lowest opacity-100 border-l-4 border-secondary-container bg-primary-container/20 py-3 px-4 hover:bg-primary-container/10 transition-all Active: translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined mr-sm" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center text-surface-container-lowest opacity-60 hover:opacity-100 py-3 px-4 hover:bg-primary-container/10 transition-all" href="#">
+<span class="material-symbols-outlined mr-sm" data-icon="add_photo_alternate">add_photo_alternate</span>
+<span class="font-label-md text-label-md">New Visualization</span>
+</a>
+<a class="flex items-center text-surface-container-lowest opacity-60 hover:opacity-100 py-3 px-4 hover:bg-primary-container/10 transition-all" href="#">
+<span class="material-symbols-outlined mr-sm" data-icon="folder_special">folder_special</span>
+<span class="font-label-md text-label-md">My Projects</span>
+</a>
+<a class="flex items-center text-surface-container-lowest opacity-60 hover:opacity-100 py-3 px-4 hover:bg-primary-container/10 transition-all" href="#">
+<span class="material-symbols-outlined mr-sm" data-icon="grid_view">grid_view</span>
+<span class="font-label-md text-label-md">Tile Catalog</span>
+</a>
+<a class="flex items-center text-surface-container-lowest opacity-60 hover:opacity-100 py-3 px-4 hover:bg-primary-container/10 transition-all" href="#">
+<span class="material-symbols-outlined mr-sm" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-md">
+<button class="w-full bg-secondary-container text-primary font-label-md text-label-md py-3 rounded-lg shadow-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
+                New Visualization
+            </button>
+</div>
+</aside>
+<!-- Content Canvas -->
+<div class="flex-grow flex flex-col md:ml-[240px]">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 h-16 w-full flex justify-between items-center px-gutter bg-surface dark:bg-inverse-surface shadow-sm">
+<div class="flex items-center md:hidden">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">TileVision</h1>
+</div>
+<!-- Desktop Nav Links -->
+<nav class="hidden md:flex items-center gap-lg">
+<a class="font-body-md text-body-md text-secondary font-bold border-b-2 border-secondary pb-1 transition-colors" href="#">Dashboard</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-secondary transition-colors" href="#">Projects</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-secondary transition-colors" href="#">Catalog</a>
+</nav>
+<div class="flex items-center gap-md">
+<button class="hidden md:flex items-center font-label-md text-label-md text-secondary border border-secondary px-sm py-base rounded-lg hover:bg-secondary/5 transition-colors">
+                    New Visualization
+                </button>
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a stylish modern interior designer with a warm expression, captured in high-key natural studio lighting. The background is a soft, out-of-focus high-end architecture studio with clean lines and architectural models. The aesthetic is clean, professional, and sophisticated, reflecting a high-end service brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2TQzXIjH_52SPo8NxpTgzD8iGOLJ9ETNqfTrSSY_yZG4soR0TABF1w002YcpOmkk7MVH1TmfeTCj9l6P0G0eybSyL4qhR_tGEfwCzdwOgKzRqNqEHd-uTsyC0pZQna2MZNMb9bcdvELHhup95WHIZXQqKp3xdKRX772ysxCAadt-ObR8omHGAT9TDVqZEu3KkOagKAxfBuc1O6EXnr11IZAI8GHbtbXl5sx0VXnFRCrxpfk6EdiPw2VTXmKW_K38A2zIobuegTw"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow p-gutter md:p-xl">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-lg gap-sm">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs">My Projects</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Review and manage your AI-powered interior tile visualizations.</p>
+</div>
+<div class="flex gap-xs">
+<div class="relative group">
+<input class="pl-10 pr-md py-xs rounded-lg border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-primary outline-none text-label-md font-label-md w-full md:w-64 transition-all" placeholder="Search projects..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+</div>
+</div>
+</div>
+<!-- Project Grid (3 Columns) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Project Card 1 -->
+<div class="project-card group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.06)] border border-outline-variant/30 transition-all hover:shadow-[0_8px_24px_rgba(0,0,0,0.10)]">
+<div class="relative aspect-[4/3] overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A high-resolution architectural photograph of a minimalist modern kitchen featuring luxury marble-patterned porcelain floor tiles. The lighting is soft and natural, coming from large floor-to-ceiling windows, highlighting the subtle textures and glossy finish of the tile. The kitchen has matte black cabinetry and gold hardware, creating a sophisticated and clean aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRd39V60FpOM-zSpHnIB1qs4habes1GopvxPDkiKvdmgQrqQkXxH525qdT5W2N1o3MA8Yvct5EMJn4atp0oi80w1yjAMvIEbmChHOX56StxWN7Gg3RknkHZcK_vecrXtjlhfrd7erFKB1KUtolXGXt0RXKSa3xvN0yCt8EMFmxLxroH1CAo3Q98dpOzjqC3m5rL5mECX8XISsOAhCfBBqfBGyfR2sIfqIawHGlcLcEBmRW4fTriGZYcuPRpl6Nm6HSBthfVTbxRA"/>
+<div class="absolute top-sm left-sm">
+<span class="bg-primary/80 backdrop-blur-md text-surface-container-lowest px-sm py-1 rounded-full font-label-md text-[12px]">Kitchen</span>
+</div>
+<!-- Hover Overlay -->
+<div class="project-actions opacity-0 absolute inset-0 bg-primary/20 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center gap-sm">
+<button class="bg-surface-container-lowest text-primary p-3 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="bg-error/90 text-white p-3 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-base">
+<h3 class="font-label-md text-label-md text-on-surface">Carrara Gold Masterpiece</h3>
+<span class="font-caption text-caption text-outline">Oct 24, 2023</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]" data-icon="grid_on">grid_on</span>
+<span class="font-caption text-caption text-on-surface-variant">Calacatta Borghini 60x120</span>
+</div>
+</div>
+</div>
+<!-- Project Card 2 -->
+<div class="project-card group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.06)] border border-outline-variant/30 transition-all hover:shadow-[0_8px_24px_rgba(0,0,0,0.10)]">
+<div class="relative aspect-[4/3] overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A serene spa-like bathroom visualization with dark charcoal slate-textured floor tiles and a floating wood vanity. Soft warm amber backlighting illuminates the textures of the stone, creating a moody yet inviting atmosphere. The design is contemporary and minimalist, emphasizing clean geometric lines and organic materials in a light-mode layout." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQdmEIFDiWZZsn81sVCQ6-fErEmGG87mbteSGPPC1sTLZJwJy3gSk2pLPIn4H-eUS7KO5fJMh2PMHNPrg0NYNK4daNIU58YMaSzZRxGjE-ANvixrThVHw07l_byVmb-i0zMB-5C8-vHqR0MTiJCeimMoHqBNDLxewnma1mKCgKRSnwgbACPstNZUJEjxxZswXMBGml1GdDvs1ZJiZT_-VrUZXK0Lsf0A7uVtR3ncY7OWv5OcC8rn9AQWoE2zHpleKG6lylBCEzQA"/>
+<div class="absolute top-sm left-sm">
+<span class="bg-primary/80 backdrop-blur-md text-surface-container-lowest px-sm py-1 rounded-full font-label-md text-[12px]">Bathroom</span>
+</div>
+<div class="project-actions opacity-0 absolute inset-0 bg-primary/20 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center gap-sm">
+<button class="bg-surface-container-lowest text-primary p-3 rounded-full shadow-lg hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="bg-error/90 text-white p-3 rounded-full shadow-lg hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-base">
+<h3 class="font-label-md text-label-md text-on-surface">Midnight Slate Spa</h3>
+<span class="font-caption text-caption text-outline">Oct 22, 2023</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]" data-icon="grid_on">grid_on</span>
+<span class="font-caption text-caption text-on-surface-variant">Nero Anthracite Textured</span>
+</div>
+</div>
+</div>
+<!-- Project Card 3 -->
+<div class="project-card group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.06)] border border-outline-variant/30 transition-all hover:shadow-[0_8px_24px_rgba(0,0,0,0.10)]">
+<div class="relative aspect-[4/3] overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A modern living room space featuring large format light-gray concrete-style tiles that extend across the entire floor. The room is filled with bright afternoon sunlight, casting long, soft shadows. The furniture is minimalist and low-profile in neutral tones. The overall aesthetic is an airy, industrial-modern luxury home in a bright light-mode setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzjgizSOnMgW9RXrRrzfLqDYqUU4HcBklOfxaR6ptoAujV0xe2CLK4oXSz5gbEqGMtAmb-ioF9cUd38VQRx01IPvXKwhQ8JeU4ghlI0UIEpfkTx-nLKUD3U8I_Ynjt5ZbGp2aF7ppkeDUjsVETydYCmNuRxDXO7XcvQB_0m2QR4NjStrcJxOw69ahqsJRSbyj8atL8mE3NP9WEeqAEyNISW94ZuEAGRs_OeBSbyVeBulX4iT9n2-O6MfvKL9_GGHanuEkEXU39Sw"/>
+<div class="absolute top-sm left-sm">
+<span class="bg-primary/80 backdrop-blur-md text-surface-container-lowest px-sm py-1 rounded-full font-label-md text-[12px]">Living Room</span>
+</div>
+<div class="project-actions opacity-0 absolute inset-0 bg-primary/20 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center gap-sm">
+<button class="bg-surface-container-lowest text-primary p-3 rounded-full shadow-lg hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="bg-error/90 text-white p-3 rounded-full shadow-lg hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-base">
+<h3 class="font-label-md text-label-md text-on-surface">Industrial Loft Floor</h3>
+<span class="font-caption text-caption text-outline">Oct 15, 2023</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]" data-icon="grid_on">grid_on</span>
+<span class="font-caption text-caption text-on-surface-variant">Urban Concrete Light Gray</span>
+</div>
+</div>
+</div>
+<!-- Project Card 4 -->
+<div class="project-card group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.06)] border border-outline-variant/30 transition-all hover:shadow-[0_8px_24px_rgba(0,0,0,0.10)]">
+<div class="relative aspect-[4/3] overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A detail-oriented close-up of a designer terrace balcony with wood-effect porcelain planks. The tiles perfectly mimic natural oak grain with a weathered finish. The outdoor space is decorated with lush green potted plants and minimalist outdoor seating. The scene is bathed in golden hour sunlight, highlighting the tactile texture of the floor in a premium, clean layout." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyW5uPvpnD3Tw7qFDfcve7OfWHwr32kf1CwctyVGYUqC4afA4ZSze5qmpWvpWEZj483ebCrPo2NbPNkFdq4saGVr0E0wdPWY-JjAdwSPYco0IJCQGk2cHrU1J8DLqJT82abZO5x-CuoQt2Vn1ejT40-H9eo41syu20uBs2YMWw8PjLlRuZxwVHOfBzzdXhNXVwR3Qs5G6jbIeAAHCB23W2fu_EeA3PaL62VDzDP0p1c_Nlj4on7--KbUZP9V1CxHTU1wI1GgVd0A"/>
+<div class="absolute top-sm left-sm">
+<span class="bg-primary/80 backdrop-blur-md text-surface-container-lowest px-sm py-1 rounded-full font-label-md text-[12px]">Outdoor</span>
+</div>
+<div class="project-actions opacity-0 absolute inset-0 bg-primary/20 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center gap-sm">
+<button class="bg-surface-container-lowest text-primary p-3 rounded-full shadow-lg hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="bg-error/90 text-white p-3 rounded-full shadow-lg hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-base">
+<h3 class="font-label-md text-label-md text-on-surface">Autumn Terrace Wood</h3>
+<span class="font-caption text-caption text-outline">Oct 12, 2023</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]" data-icon="grid_on">grid_on</span>
+<span class="font-caption text-caption text-on-surface-variant">Nordic Oak Plank 20x120</span>
+</div>
+</div>
+</div>
+<!-- Empty Project / Add New Card -->
+<div class="border-2 border-dashed border-outline-variant rounded-xl flex flex-col items-center justify-center p-xl group cursor-pointer hover:border-secondary hover:bg-secondary/5 transition-all">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-md group-hover:bg-secondary-container group-hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[32px]" data-icon="add">add</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant group-hover:text-secondary">Start New Project</span>
+</div>
+</div>
+</main>
+<!-- Footer (Simple & Clean) -->
+<footer class="mt-auto px-gutter py-md bg-surface-container-low border-t border-outline-variant/30 flex justify-between items-center">
+<p class="font-caption text-caption text-outline">© 2023 TileVision AI Engine</p>
+<div class="flex gap-md">
+<a class="font-caption text-caption text-outline hover:text-primary" href="#">Help Center</a>
+<a class="font-caption text-caption text-outline hover:text-primary" href="#">Privacy</a>
+</div>
+</footer>
+</div>
+<!-- Mobile Navigation Shell -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-lowest shadow-[0_-4px_12px_rgba(0,0,0,0.05)] z-50 flex justify-around items-center h-16 px-sm">
+<a class="flex flex-col items-center gap-1 text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="add_photo_alternate">add_photo_alternate</span>
+<span class="text-[10px] font-medium uppercase tracking-wider">New</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="text-[10px] font-medium uppercase tracking-wider">Catalog</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[10px] font-medium uppercase tracking-wider">Settings</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+                card.style.transition = 'transform 0.1s ease-out';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+
+        // Search highlight interaction
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-[1.02]');
+            searchInput.parentElement.style.transition = 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-[1.02]');
+        });
+    </script>
+</body></html>

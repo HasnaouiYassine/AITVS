@@ -1,0 +1,246 @@
+
+> frontend@0.1.0 dev
+> next dev --hostname 127.0.0.1 --port 3000
+
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://127.0.0.1:3000
+- Network:       http://127.0.0.1:3000
+- Environments: .env.local
+✓ Ready in 922ms
+
+ GET /visualize/floor-select 200 in 3.3s (next.js: 2.6s, proxy.ts: 241ms, application-code: 510ms)
+ GET /catalog 200 in 3.3s (next.js: 3.0s, proxy.ts: 236ms, application-code: 156ms)
+ GET /dashboard 200 in 620ms (next.js: 437ms, proxy.ts: 6ms, application-code: 177ms)
+ GET /dashboard 200 in 273ms (next.js: 76ms, proxy.ts: 31ms, application-code: 166ms)
+ GET /dashboard 200 in 200ms (next.js: 8ms, proxy.ts: 10ms, application-code: 182ms)
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600607687644-c7171b42498b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75 500 in 994ms (next.js: 958ms, application-code: 36ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600607687644-c7171b42498b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75 500 in 995ms (next.js: 958ms, application-code: 37ms)
+ GET /dashboard 200 in 142ms (next.js: 8ms, proxy.ts: 7ms, application-code: 127ms)
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600210491892-03d54c0aaf87%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75 500 in 380ms (next.js: 325ms, application-code: 55ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600210491892-03d54c0aaf87%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75 500 in 381ms (next.js: 325ms, application-code: 56ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600607687644-c7171b42498b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75 500 in 384ms (next.js: 348ms, application-code: 35ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600607687644-c7171b42498b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75 500 in 384ms (next.js: 348ms, application-code: 36ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600566752355-35792bedcfea%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75 500 in 380ms (next.js: 362ms, application-code: 18ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600566752355-35792bedcfea%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75 500 in 380ms (next.js: 362ms, application-code: 18ms)
+ GET /visualize 200 in 412ms (next.js: 362ms, proxy.ts: 6ms, application-code: 44ms)
+ GET /catalog 200 in 127ms (next.js: 88ms, proxy.ts: 4ms, application-code: 35ms)
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1618220179428-22790b461013%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 201ms (next.js: 127ms, application-code: 74ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1618220179428-22790b461013%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 202ms (next.js: 127ms, application-code: 74ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600585152220-90363fe7e115%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 207ms (next.js: 163ms, application-code: 44ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600585152220-90363fe7e115%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 207ms (next.js: 163ms, application-code: 44ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1581858726788-75bc0f6a952d%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 206ms (next.js: 179ms, application-code: 26ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1581858726788-75bc0f6a952d%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 206ms (next.js: 179ms, application-code: 26ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1604014237800-1c9102c219da%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 254ms (next.js: 199ms, application-code: 55ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1604014237800-1c9102c219da%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 254ms (next.js: 199ms, application-code: 55ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600566753190-17f0baa2a6c3%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 252ms (next.js: 215ms, application-code: 37ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600566753190-17f0baa2a6c3%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 252ms (next.js: 215ms, application-code: 37ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600210492486-724fe5c67fb0%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 251ms (next.js: 233ms, application-code: 17ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600210492486-724fe5c67fb0%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 251ms (next.js: 233ms, application-code: 17ms)
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1581858726788-75bc0f6a952d%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 38ms (next.js: 24ms, application-code: 14ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1581858726788-75bc0f6a952d%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 38ms (next.js: 24ms, application-code: 14ms)
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600585152220-90363fe7e115%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 43ms (next.js: 29ms, application-code: 14ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600585152220-90363fe7e115%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 43ms (next.js: 29ms, application-code: 14ms)
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1604014237800-1c9102c219da%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 39ms (next.js: 25ms, application-code: 13ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1604014237800-1c9102c219da%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 39ms (next.js: 25ms, application-code: 13ms)
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600566753190-17f0baa2a6c3%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 35ms (next.js: 22ms, application-code: 14ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600566753190-17f0baa2a6c3%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=640&q=75 500 in 35ms (next.js: 22ms, application-code: 14ms)
+ GET /settings 200 in 311ms (next.js: 265ms, proxy.ts: 5ms, application-code: 41ms)
+ GET /admin 200 in 334ms (next.js: 286ms, proxy.ts: 5ms, application-code: 43ms)
+ GET /dashboard 200 in 59ms (next.js: 7ms, proxy.ts: 7ms, application-code: 45ms)
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: Error: connect EACCES 199.232.82.208:443
+      at <unknown> (Error: connect EACCES 199.232.82.208:443) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '199.232.82.208',
+    port: 443
+  }
+}
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600607687644-c7171b42498b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75 500 in 139ms (next.js: 85ms, application-code: 55ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600607687644-c7171b42498b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75 500 in 139ms (next.js: 85ms, application-code: 55ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600210491892-03d54c0aaf87%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75 500 in 137ms (next.js: 105ms, application-code: 32ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600210491892-03d54c0aaf87%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75 500 in 137ms (next.js: 105ms, application-code: 32ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600566752355-35792bedcfea%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75 500 in 136ms (next.js: 122ms, application-code: 14ms)
+ GET /_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1600566752355-35792bedcfea%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75 500 in 136ms (next.js: 122ms, application-code: 14ms)
+ GET /dashboard 200 in 22ms (next.js: 5ms, proxy.ts: 7ms, application-code: 9ms)
+ GET /dashboard 200 in 47ms (next.js: 5ms, proxy.ts: 4ms, application-code: 38ms)
+ GET /dashboard 200 in 15ms (next.js: 5ms, proxy.ts: 3ms, application-code: 7ms)
+ GET /dashboard 200 in 46ms (next.js: 5ms, proxy.ts: 3ms, application-code: 38ms)
