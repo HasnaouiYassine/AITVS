@@ -1,15 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Globe2, LockKeyhole } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 
-export default function LoginPage() {
+function LoginForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   return (
     <main className="grid min-h-screen place-items-center px-4 py-10">
@@ -26,17 +31,27 @@ export default function LoginPage() {
           onSubmit={async (event) => {
             event.preventDefault();
             setLoading(true);
+            setError("");
             const form = new FormData(event.currentTarget);
-            await signIn("credentials", {
+            const result = await signIn("credentials", {
               email: form.get("email"),
               password: form.get("password"),
-              callbackUrl: "/dashboard",
+              callbackUrl,
+              redirect: false,
             });
+            if (result?.error) {
+              setError("The email or password does not match an account.");
+              setLoading(false);
+              return;
+            }
+            router.push(result?.url || callbackUrl);
+            router.refresh();
             setLoading(false);
           }}
         >
           <Input label="Email" name="email" type="email" placeholder="you@example.com" required />
           <Input label="Password" name="password" type="password" placeholder="Minimum 8 characters" required />
+          {error ? <p className="rounded-lg bg-red-50 px-3 py-2 text-sm font-semibold text-red-700">{error}</p> : null}
           <Button className="w-full" loading={loading} icon={<LockKeyhole size={17} />}>
             Sign in
           </Button>
@@ -46,7 +61,7 @@ export default function LoginPage() {
           or
           <span className="h-px flex-1 bg-line" />
         </div>
-        <Button variant="secondary" className="w-full" icon={<Globe2 size={17} />} onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
+        <Button variant="secondary" className="w-full" icon={<Globe2 size={17} />} onClick={() => signIn("google", { callbackUrl })}>
           Continue with Google
         </Button>
         <p className="mt-6 text-center text-sm text-muted">
@@ -57,5 +72,13 @@ export default function LoginPage() {
         </p>
       </Card>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<main className="grid min-h-screen place-items-center px-4 py-10" />}>
+      <LoginForm />
+    </Suspense>
   );
 }

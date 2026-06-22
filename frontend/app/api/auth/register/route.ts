@@ -4,8 +4,10 @@ import User from "@/models/User";
 
 export async function POST(req: Request) {
   const { name, email, password } = await req.json();
+  const normalizedEmail = String(email || "").trim().toLowerCase();
+  const trimmedName = String(name || "").trim();
 
-  if (!name || !email || !password || String(password).length < 8) {
+  if (!trimmedName || !normalizedEmail || !password || String(password).length < 8) {
     return NextResponse.json({ error: "Name, email, and an 8 character password are required" }, { status: 400 });
   }
 
@@ -14,9 +16,9 @@ export async function POST(req: Request) {
   }
 
   await connectDB();
-  const exists = await User.findOne({ email });
+  const exists = await User.findOne({ email: normalizedEmail });
   if (exists) return NextResponse.json({ error: "Email is already registered" }, { status: 409 });
 
-  await User.create({ name, email, password, role: "user" });
+  await User.create({ name: trimmedName, email: normalizedEmail, password, role: "user" });
   return NextResponse.json({ message: "User created" }, { status: 201 });
 }

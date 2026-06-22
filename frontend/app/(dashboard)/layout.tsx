@@ -1,15 +1,18 @@
 import type { ReactNode } from "react";
-import { Sidebar } from "@/components/layout/Sidebar";
-import { TopNav } from "@/components/layout/TopNav";
+import { redirect } from "next/navigation";
+import { AppShell } from "@/components/layout/AppShell";
+import { auth } from "@/lib/auth";
 
-export default function DashboardLayout({ children }: { children: ReactNode }) {
-  return (
-    <div className="min-h-screen">
-      <Sidebar />
-      <div className="md:pl-60">
-        <TopNav />
-        <main className="mx-auto w-full max-w-[1440px] px-4 py-6 md:px-8 md:py-8">{children}</main>
-      </div>
-    </div>
-  );
+export default async function DashboardLayout({ children }: { children: ReactNode }) {
+  const authConfigured =
+    Boolean(process.env.MONGODB_URI) &&
+    Boolean(process.env.AUTH_SECRET) &&
+    process.env.AUTH_SECRET !== "replace-with-a-long-random-secret";
+  const session = await auth();
+
+  if (authConfigured && !session?.user) {
+    redirect("/login");
+  }
+
+  return <AppShell user={session?.user}>{children}</AppShell>;
 }

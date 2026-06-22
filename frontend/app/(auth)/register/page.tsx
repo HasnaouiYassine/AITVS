@@ -1,13 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 
-export default function RegisterPage() {
+function RegisterForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -33,7 +38,22 @@ export default function RegisterPage() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(Object.fromEntries(form)),
             });
-            setMessage(res.ok ? "Account created. You can sign in now." : "Could not create account yet.");
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+              setMessage(data.error || "Could not create account yet.");
+              setLoading(false);
+              return;
+            }
+            const email = String(form.get("email") || "");
+            const password = String(form.get("password") || "");
+            const result = await signIn("credentials", { email, password, callbackUrl, redirect: false });
+            if (result?.error) {
+              setMessage("Account created. You can sign in now.");
+              setLoading(false);
+              return;
+            }
+            router.push(result?.url || callbackUrl);
+            router.refresh();
             setLoading(false);
           }}
         >
@@ -53,5 +73,13 @@ export default function RegisterPage() {
         </p>
       </Card>
     </main>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<main className="grid min-h-screen place-items-center px-4 py-10" />}>
+      <RegisterForm />
+    </Suspense>
   );
 }
