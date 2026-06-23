@@ -3,7 +3,7 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Install system dependencies (git needed for pip to clone SAM2 from GitHub)
-RUN apt-get update && apt-get install -y git libgl1-mesa-glx libglib2.0-0 && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y git libgl1 libglib2.0-0t64 && rm -rf /var/lib/apt/lists/*
 
 # Install CPU-only PyTorch FIRST (saves ~1.5 GB vs full CUDA build)
 RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu
