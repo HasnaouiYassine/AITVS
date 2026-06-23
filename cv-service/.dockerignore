@@ -1,0 +1,13 @@
+venv/
+sam2_repo/
+checkpoints/
+__pycache__/
+*.pyc
+*.pyo
+.env
+.git/
+test_*.jpg
+test_*.png
+*.pt
+*.pth
+README.md

@@ -128,12 +128,32 @@ async def startup_event() -> None:
     checkpoint = os.getenv("SAM2_CHECKPOINT", "checkpoints/sam2_hiera_small.pt")
     config = os.getenv("SAM2_CONFIG", "sam2_hiera_s.yaml")
 
+    # Auto-download checkpoint if it doesn't exist (needed for Render / Docker)
+    if not os.path.exists(checkpoint):
+        checkpoint_url = os.getenv(
+            "SAM2_CHECKPOINT_URL",
+            "https://dl.fbaipublicfiles.com/segment_anything_2/072824/sam2_hiera_small.pt"
+        )
+        logger.info("Checkpoint not found at %s — downloading from %s ...", checkpoint, checkpoint_url)
+        try:
+            import requests as req
+            os.makedirs(os.path.dirname(checkpoint) or "checkpoints", exist_ok=True)
+            resp = req.get(checkpoint_url, stream=True, timeout=300)
+            resp.raise_for_status()
+            with open(checkpoint, "wb") as f:
+                for chunk in resp.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            logger.info("Checkpoint downloaded successfully (%d bytes)", os.path.getsize(checkpoint))
+        except Exception as e:
+            logger.error("Failed to download checkpoint: %s", e)
+
     try:
         segmentor = get_segmentor()
         segmentor.load_model(checkpoint, config)
         logger.info("SAM2 loaded successfully")
     except Exception as e:
         logger.warning("SAM2 not loaded: %s. Will use polygon fallback.", e)
+
 
 
 # ---------------------------------------------------------------------------
