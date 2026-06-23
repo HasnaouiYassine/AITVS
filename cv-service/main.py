@@ -125,15 +125,25 @@ async def startup_event() -> None:
         logger.error("Failed to initialize Cloudinary: %s", e)
 
     # 2. Load SAM2 (with fallback)
+    disable_sam2 = os.getenv("DISABLE_SAM2", "false").lower() == "true"
+    if disable_sam2:
+        logger.info("SAM2 is disabled via DISABLE_SAM2=true. Using polygon fallback mode only.")
+        return
+
     checkpoint = os.getenv("SAM2_CHECKPOINT", "checkpoints/sam2_hiera_small.pt")
     config = os.getenv("SAM2_CONFIG", "sam2_hiera_s.yaml")
 
     # Auto-download checkpoint if it doesn't exist (needed for Render / Docker)
     if not os.path.exists(checkpoint):
-        checkpoint_url = os.getenv(
-            "SAM2_CHECKPOINT_URL",
-            "https://dl.fbaipublicfiles.com/segment_anything_2/072824/sam2_hiera_small.pt"
-        )
+        # Determine URL based on checkpoint name
+        filename = os.path.basename(checkpoint)
+        checkpoint_url = os.getenv("SAM2_CHECKPOINT_URL")
+        if not checkpoint_url:
+            if "tiny" in filename:
+                checkpoint_url = "https://dl.fbaipublicfiles.com/segment_anything_2/072824/sam2_hiera_tiny.pt"
+            else:
+                checkpoint_url = "https://dl.fbaipublicfiles.com/segment_anything_2/072824/sam2_hiera_small.pt"
+        
         logger.info("Checkpoint not found at %s — downloading from %s ...", checkpoint, checkpoint_url)
         try:
             import requests as req
@@ -153,6 +163,7 @@ async def startup_event() -> None:
         logger.info("SAM2 loaded successfully")
     except Exception as e:
         logger.warning("SAM2 not loaded: %s. Will use polygon fallback.", e)
+
 
 
 

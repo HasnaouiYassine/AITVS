@@ -124,6 +124,7 @@ curl -X POST http://localhost:8000/visualize \
 | `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name | *(required)* |
 | `CLOUDINARY_API_KEY` | Cloudinary API key | *(required)* |
 | `CLOUDINARY_API_SECRET` | Cloudinary API secret | *(required)* |
+| `DISABLE_SAM2` | Disable SAM2 to bypass OOM on free hosts and use polygon only | `false` |
 | `SAM2_CHECKPOINT` | Path to SAM2 model checkpoint | `checkpoints/sam2_hiera_small.pt` |
 | `SAM2_CONFIG` | SAM2 model config YAML filename | `sam2_hiera_s.yaml` |
 | `ALLOWED_ORIGINS` | Comma-separated list of CORS origins | `http://localhost:3000` |
