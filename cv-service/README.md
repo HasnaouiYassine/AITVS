@@ -171,5 +171,6 @@ docker run -p 8000:8000 --env-file .env tilevision-cv
 
 - **Task 1** ✅ Service scaffold + stub endpoint
 - **Task 2** ✅ SAM2 floor segmentation
-- **Task 3** — Perspective tile warping
-- **Task 4** — Blending, shadow preservation, and final compositing
+- **Task 3** ✅ Perspective tile warping
+- **Task 4** ✅ Blending, shadow preservation, and final compositing
+- **Task 5** ✅ Cloudinary Integration & Connect to Next.js

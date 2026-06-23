@@ -23,8 +23,11 @@ from models.schemas import (
     VisualizeResponse,
 )
 from pipeline.segmentation import get_segmentor
-from utils.image_utils import url_to_numpy, numpy_to_bytes
-from utils.cloudinary_utils import upload_image
+from pipeline.perspective import warp_tile_to_floor
+from pipeline.blending import blend_shadows
+from pipeline.compositor import composite_result
+from utils.image_utils import url_to_numpy, resize_if_too_large
+from utils.cloudinary_utils import init_cloudinary, upload_image_async
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -114,10 +117,17 @@ async def startup_event() -> None:
     logger.info("Port    : %d", PORT)
     logger.info("=" * 60)
 
+    # 1. Init Cloudinary
+    try:
+        init_cloudinary()
+        logger.info("Cloudinary initialized successfully")
+    except Exception as e:
+        logger.error("Failed to initialize Cloudinary: %s", e)
+
+    # 2. Load SAM2 (with fallback)
     checkpoint = os.getenv("SAM2_CHECKPOINT", "checkpoints/sam2_hiera_small.pt")
     config = os.getenv("SAM2_CONFIG", "sam2_hiera_s.yaml")
 
-    # Try to load SAM2, fall back gracefully if checkpoint not found
     try:
         segmentor = get_segmentor()
         segmentor.load_model(checkpoint, config)
@@ -143,82 +153,85 @@ async def health_check() -> HealthResponse:
 
 
 @app.post("/visualize", response_model=VisualizeResponse, tags=["Visualization"])
-async def visualize(request: VisualizeRequest) -> VisualizeResponse:
+async def visualize(req: VisualizeRequest) -> VisualizeResponse:
     """
     Process a room image and apply a tile texture.
 
     Args:
-        request: The visualization request body containing room image URL,
-                 tile image URL, floor corners, and an optional point hint.
+        req: The visualization request body containing room image URL,
+             tile image URL, floor corners, and an optional point hint.
 
     Returns:
         VisualizeResponse with result image URL, mask URL, and timing.
     """
-    start_time: float = time.time()
-    logger.info("Processing visualization request...")
-    logger.info("  Room image URL  : %s", request.room_image_url)
-    logger.info("  Tile image URL  : %s", request.tile_image_url)
-    logger.info("  Floor corners   : %s", [(c.x, c.y) for c in request.floor_corners])
-    logger.info("  Floor point     : %s", request.floor_point)
-
-    # Validate corner count
-    if len(request.floor_corners) != 4:
-        raise HTTPException(
-            status_code=422,
-            detail=f"Exactly 4 floor corners required, got {len(request.floor_corners)}",
-        )
-
-    # 1. Download room image
+    start_time = time.time()
     try:
-        room_image = url_to_numpy(request.room_image_url)
-    except Exception as e:
-        logger.error("Failed to download/decode room image: %s", e)
-        raise HTTPException(
-            status_code=400,
-            detail=f"Failed to download room image: {str(e)}"
+        # Step 1: Download images
+        logger.info("Downloading room image...")
+        room_img = url_to_numpy(req.room_image_url)
+        room_img = resize_if_too_large(room_img, max_dim=1920)
+
+        logger.info("Downloading tile image...")
+        tile_img = url_to_numpy(req.tile_image_url)
+
+        # Step 2: Generate floor mask
+        logger.info("Generating floor mask...")
+        segmentor = get_segmentor()
+        mask_time_start = time.time()
+        use_sam2 = False
+        mask = None
+
+        if req.floor_point and segmentor._predictor is not None:
+            try:
+                mask = segmentor.generate_mask(
+                    room_img,
+                    (req.floor_point.x, req.floor_point.y)
+                )
+                use_sam2 = True
+                logger.info("SAM2 segmentation took %d ms", int((time.time() - mask_time_start) * 1000))
+            except Exception as e:
+                logger.warning("SAM2 segmentation failed: %s. Falling back to polygon.", e)
+
+        if not use_sam2:
+            if len(req.floor_corners) != 4:
+                raise ValueError(f"Exactly 4 floor corners required for polygon fallback, got {len(req.floor_corners)}")
+            mask = segmentor.generate_mask_from_corners(room_img, req.floor_corners)
+            logger.info("Polygon fallback mask generation took %d ms", int((time.time() - mask_time_start) * 1000))
+
+        # Step 3: Warp tile to floor perspective
+        logger.info("Warping tile texture...")
+        warped_tile = warp_tile_to_floor(tile_img, req.floor_corners, room_img.shape[:2], mask)
+
+        # Step 4: Blend shadows and lighting
+        logger.info("Blending shadows...")
+        blended_tile = blend_shadows(room_img, warped_tile, mask)
+
+        # Step 5: Composite final result
+        logger.info("Compositing result...")
+        result_img = composite_result(room_img, blended_tile, mask)
+
+        # Step 6: Upload both mask and result to Cloudinary
+        logger.info("Uploading results...")
+        import time as t
+        timestamp = int(t.time())
+        result_url = await upload_image_async(result_img, "tilevision/results", f"result_{timestamp}")
+        mask_url = await upload_image_async(mask, "tilevision/masks", f"mask_{timestamp}")
+
+        processing_ms = int((time.time() - start_time) * 1000)
+        logger.info(f"Total processing time: {processing_ms}ms")
+
+        return VisualizeResponse(
+            result_image_url=result_url,
+            mask_image_url=mask_url,
+            processing_time_ms=processing_ms
         )
 
-    # 2. If floor_point provided: use SAM2 to generate mask
-    segmentor = get_segmentor()
-    mask_time_start = time.time()
-    use_sam2 = False
-    mask = None
-
-    if request.floor_point is not None and segmentor._predictor is not None:
-        try:
-            logger.info("Using SAM2 point prompt for floor segmentation...")
-            point = (request.floor_point.x, request.floor_point.y)
-            mask = segmentor.generate_mask(room_image, point)
-            use_sam2 = True
-            logger.info("SAM2 segmentation took %d ms", int((time.time() - mask_time_start) * 1000))
-        except Exception as e:
-            logger.warning("SAM2 segmentation failed: %s. Falling back to polygon.", e)
-
-    # 3. Else: use corner-based polygon mask fallback
-    if not use_sam2:
-        logger.info("Using corner-based polygon mask fallback...")
-        mask = segmentor.generate_mask_from_corners(room_image, request.floor_corners)
-        logger.info("Polygon fallback mask generation took %d ms", int((time.time() - mask_time_start) * 1000))
-
-    # 4. Upload mask to Cloudinary (temp)
-    try:
-        mask_bytes = numpy_to_bytes(mask, format='PNG')
-        mask_url = upload_image(mask_bytes, folder="tilevision/masks")
+    except ValueError as e:
+        logger.error("Validation error in visualization pipeline: %s", e)
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        logger.error("Failed to upload mask to Cloudinary: %s", e)
-        raise HTTPException(
-            status_code=500,
-            detail=f"Cloudinary upload failed: {str(e)}"
-        )
-
-    processing_time_ms: int = int((time.time() - start_time) * 1000)
-    logger.info("Visualization complete in %d ms", processing_time_ms)
-
-    return VisualizeResponse(
-        result_image_url="https://res.cloudinary.com/demo/image/upload/sample.jpg",
-        mask_image_url=mask_url,
-        processing_time_ms=processing_time_ms,
-    )
+        logger.error(f"Pipeline failed: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Visualization pipeline failed")
 
 
 # ---------------------------------------------------------------------------
