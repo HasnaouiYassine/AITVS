@@ -130,8 +130,8 @@ async def startup_event() -> None:
         logger.info("SAM2 is disabled via DISABLE_SAM2=true. Using polygon fallback mode only.")
         return
 
-    checkpoint = os.getenv("SAM2_CHECKPOINT", "checkpoints/sam2_hiera_small.pt")
-    config = os.getenv("SAM2_CONFIG", "sam2_hiera_s.yaml")
+    checkpoint = os.getenv("SAM2_CHECKPOINT", "checkpoints/sam2_hiera_tiny.pt")
+    config = os.getenv("SAM2_CONFIG", "sam2_hiera_t.yaml")
 
     # Auto-download checkpoint if it doesn't exist (needed for Render / Docker)
     if not os.path.exists(checkpoint):
