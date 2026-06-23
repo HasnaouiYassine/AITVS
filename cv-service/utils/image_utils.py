@@ -1,13 +1,10 @@
 """
-image_utils.py — Image download, decode, and encode helpers.
-
-Provides utility functions for fetching images from URLs,
-decoding them into NumPy arrays, and encoding arrays back
-to bytes for upload.
+image_utils.py — Image download, decode, encode, and compositing helpers.
 """
 
+import io
 import logging
-from io import BytesIO
+from typing import Tuple
 
 import cv2
 import numpy as np
@@ -16,91 +13,95 @@ from PIL import Image
 
 logger = logging.getLogger(__name__)
 
-# Timeout for image downloads (seconds)
 DOWNLOAD_TIMEOUT: int = 30
 
 
-def download_image(url: str) -> np.ndarray:
+def url_to_numpy(url: str) -> np.ndarray:
     """
-    Download an image from a URL and return it as a BGR NumPy array.
-
-    Args:
-        url: The HTTP(S) URL of the image to download.
-
-    Returns:
-        The image as a NumPy array in BGR colour space (H, W, C).
-
-    Raises:
-        ValueError: If the URL is empty or the image cannot be decoded.
-        requests.RequestException: If the HTTP request fails.
+    Download image from URL and return as numpy RGB array.
+    Handles redirects, timeouts, and bad responses.
     """
     if not url:
         raise ValueError("Image URL must not be empty")
 
-    logger.info("Downloading image from: %s", url[:80])
+    logger.info("Downloading image from URL: %s", url[:80])
+    try:
+        response = requests.get(url, timeout=DOWNLOAD_TIMEOUT, stream=True)
+        response.raise_for_status()
+    except Exception as e:
+        logger.error("Failed to download image from %s: %s", url, e)
+        raise ValueError(f"Failed to download image: {e}")
 
-    response = requests.get(url, timeout=DOWNLOAD_TIMEOUT, stream=True)
-    response.raise_for_status()
-
-    # Decode bytes → PIL → NumPy → BGR
-    image_bytes = BytesIO(response.content)
-    pil_image = Image.open(image_bytes).convert("RGB")
-    rgb_array = np.array(pil_image, dtype=np.uint8)
-    bgr_array = cv2.cvtColor(rgb_array, cv2.COLOR_RGB2BGR)
-
-    if bgr_array is None or bgr_array.size == 0:
-        raise ValueError(f"Failed to decode image from URL: {url}")
-
-    logger.info("Image downloaded — shape: %s, dtype: %s", bgr_array.shape, bgr_array.dtype)
-    return bgr_array
+    try:
+        image_bytes = io.BytesIO(response.content)
+        pil_image = Image.open(image_bytes).convert("RGB")
+        rgb_array = np.array(pil_image, dtype=np.uint8)
+        if rgb_array is None or rgb_array.size == 0:
+            raise ValueError("Decoded image is empty")
+        return rgb_array
+    except Exception as e:
+        logger.error("Failed to decode image from %s: %s", url, e)
+        raise ValueError(f"Failed to decode image: {e}")
 
 
-def encode_image_to_bytes(image: np.ndarray, fmt: str = ".png") -> bytes:
+def numpy_to_bytes(image_np: np.ndarray, format: str = 'PNG') -> bytes:
+    """Convert numpy array to image bytes for upload."""
+    try:
+        pil_image = Image.fromarray(image_np)
+        img_byte_arr = io.BytesIO()
+        pil_image.save(img_byte_arr, format=format)
+        return img_byte_arr.getvalue()
+    except Exception as e:
+        logger.error("Failed to convert numpy array to image bytes: %s", e)
+        raise ValueError(f"Failed to encode image to bytes: {e}")
+
+
+def resize_if_too_large(image_np: np.ndarray, max_dim: int = 1920) -> np.ndarray:
     """
-    Encode a NumPy image array to bytes.
-
-    Args:
-        image: The image as a NumPy array (H, W, C) or (H, W).
-        fmt: Output format (default ".png").
-
-    Returns:
-        The encoded image as bytes.
-
-    Raises:
-        ValueError: If encoding fails.
+    Resize image if largest dimension exceeds max_dim.
+    Preserves aspect ratio.
     """
-    logger.info("Encoding image to %s format — shape: %s", fmt, image.shape)
+    h, w = image_np.shape[:2]
+    if max(h, w) <= max_dim:
+        return image_np
 
-    success, buffer = cv2.imencode(fmt, image)
-    if not success:
-        raise ValueError(f"Failed to encode image to {fmt}")
-
-    encoded_bytes: bytes = buffer.tobytes()
-    logger.info("Encoded image size: %d bytes", len(encoded_bytes))
-    return encoded_bytes
-
-
-def resize_image(
-    image: np.ndarray, max_dimension: int = 1920
-) -> np.ndarray:
-    """
-    Resize an image so its largest dimension does not exceed max_dimension.
-
-    Args:
-        image: Input image array (H, W, C).
-        max_dimension: Maximum allowed size for width or height.
-
-    Returns:
-        The (potentially) resized image.
-    """
-    h, w = image.shape[:2]
-    if max(h, w) <= max_dimension:
-        logger.info("Image already within max dimension (%d); no resize needed", max_dimension)
-        return image
-
-    scale: float = max_dimension / max(h, w)
+    scale = max_dim / max(h, w)
     new_w = int(w * scale)
     new_h = int(h * scale)
-    resized = cv2.resize(image, (new_w, new_h), interpolation=cv2.INTER_AREA)
-    logger.info("Resized image from (%d, %d) to (%d, %d)", w, h, new_w, new_h)
+
+    logger.info("Resizing image from (%d, %d) to (%d, %d)", w, h, new_w, new_h)
+    resized = cv2.resize(image_np, (new_w, new_h), interpolation=cv2.INTER_AREA)
     return resized
+
+
+def tile_texture(texture: np.ndarray, target_h: int, target_w: int) -> np.ndarray:
+    """
+    Repeat tile texture to fill target dimensions.
+    Uses np.tile for efficiency.
+    """
+    th, tw = texture.shape[:2]
+    reps_y = int(np.ceil(target_h / th))
+    reps_x = int(np.ceil(target_w / tw))
+
+    logger.info("Tiling texture of size (%d, %d) to target (%d, %d)", tw, th, target_w, target_h)
+    if texture.ndim == 3:
+        tiled = np.tile(texture, (reps_y, reps_x, 1))
+    else:
+        tiled = np.tile(texture, (reps_y, reps_x))
+
+    return tiled[:target_h, :target_w]
+
+
+def apply_mask(base: np.ndarray, overlay: np.ndarray, mask: np.ndarray) -> np.ndarray:
+    """
+    Composite overlay onto base using binary mask.
+    mask: 255 = use overlay, 0 = use base
+    """
+    if base.ndim == 3 and mask.ndim == 2:
+        mask_3d = np.expand_dims(mask, axis=2)
+    else:
+        mask_3d = mask
+
+    alpha = mask_3d.astype(np.float32) / 255.0
+    result = overlay.astype(np.float32) * alpha + base.astype(np.float32) * (1.0 - alpha)
+    return np.clip(result, 0, 255).astype(np.uint8)

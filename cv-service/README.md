@@ -34,7 +34,7 @@ POST /visualize
 
 ## Quick Start
 
-### 1. Clone & install
+### 1. Clone & install dependencies
 
 ```bash
 cd cv-service
@@ -45,6 +45,19 @@ venv\Scripts\activate
 source venv/bin/activate
 
 pip install -r requirements.txt
+
+# Clone and install SAM2 (Note: Rename directory to sam2_repo to avoid import overshadowing)
+git clone https://github.com/facebookresearch/sam2.git sam2_repo
+cd sam2_repo
+pip install -e .
+cd ..
+
+# Download the small checkpoint (CPU-friendly)
+mkdir checkpoints
+# Windows (PowerShell)
+Invoke-WebRequest -Uri "https://dl.fbaipublicfiles.com/segment_anything_2/072824/sam2_hiera_small.pt" -OutFile "checkpoints/sam2_hiera_small.pt"
+# macOS / Linux / Git Bash
+wget -O checkpoints/sam2_hiera_small.pt https://dl.fbaipublicfiles.com/segment_anything_2/072824/sam2_hiera_small.pt
 ```
 
 ### 2. Configure environment
@@ -157,6 +170,6 @@ docker run -p 8000:8000 --env-file .env tilevision-cv
 ## Roadmap
 
 - **Task 1** ✅ Service scaffold + stub endpoint
-- **Task 2** — SAM2 floor segmentation
+- **Task 2** ✅ SAM2 floor segmentation
 - **Task 3** — Perspective tile warping
 - **Task 4** — Blending, shadow preservation, and final compositing
