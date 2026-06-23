@@ -45,12 +45,7 @@ venv\Scripts\activate
 source venv/bin/activate
 
 pip install -r requirements.txt
-
-# Clone and install SAM2 (Note: Rename directory to sam2_repo to avoid import overshadowing)
-git clone https://github.com/facebookresearch/sam2.git sam2_repo
-cd sam2_repo
-pip install -e .
-cd ..
+# SAM2 is installed automatically from GitHub via requirements.txt
 
 # Download the small checkpoint (CPU-friendly)
 mkdir checkpoints
